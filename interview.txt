@@ -1,0 +1,111 @@
+Tell me about OSI model:
+OSI Model :
+🔹 7 Layers of the OSI Model (top → bottom)
+Application 🖥️
+Where users interact (apps like browsers, email, WhatsApp).
+Protocols: HTTP, SMTP, FTP.
+Presentation 🎨
+Translates data so apps can understand it.
+Handles encryption, compression, and formatting (e.g., JPEG, MP3, SSL/TLS).
+Session 🔑
+Manages connections (start, maintain, end communication between devices).
+Example: keeping you logged in during a video call.
+Transport 🚚
+Ensures reliable delivery of data (splits into segments, adds error checking).
+Protocols: TCP (reliable), UDP (fast but no guarantee).
+Network 🌍
+Decides the path data takes across networks.
+Protocols: IP (Internet Protocol), ICMP.
+Data Link 🔗
+Deals with local delivery on the same network (MAC addresses, switches).
+Protocols: Ethernet, Wi-Fi.
+Physical ⚡
+The actual hardware & signals (cables, fiber optics, radio waves).
+
+🧠 Easy way to remember
+"All People Seem To Need Data Processing"
+(Application → Presentation → Session → Transport → Network → Data link → Physical)
+
+
+Waht are DNS record you know ?
+
+| **Record**                                      | **Purpose**                                                                      | **Example**                                          |
+| ----------------------------------------------- | -------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| **A** (Address)                                 | Maps a domain name to an **IPv4 address**.                                       | `example.com → 93.184.216.34`                        |
+| **AAAA**                                        | Maps a domain to an **IPv6 address**.                                            | `example.com → 2606:2800:220:1:248:1893:25c8:1946`   |
+| **CNAME** (Canonical Name)                      | Alias → points one domain to another domain.                                     | `www.example.com → example.com`                      |
+| **MX** (Mail Exchange)                          | Tells which mail servers handle email for the domain.                            | `example.com → mail.example.com (priority 10)`       |
+| **TXT**                                         | Stores arbitrary text. Common uses: **SPF, DKIM, DMARC** for email security.     | `"v=spf1 include:_spf.google.com ~all"`              |
+| **NS** (Name Server)                            | Specifies which servers host the DNS zone.                                       | `example.com → ns1.dnsprovider.com`                  |
+| **SOA** (Start of Authority)                    | Contains admin info about the domain (primary NS, contact email, refresh times). | Zone control record                                  |
+| **PTR** (Pointer)                               | Reverse DNS lookup: maps an IP back to a domain.                                 | `93.184.216.34 → example.com`                        |
+| **SRV** (Service)                               | Defines host/port for specific services (VoIP, IM, etc.).                        | `_sip._tcp.example.com → sipserver.example.com:5060` |
+| **CAA** (Certification Authority Authorization) | Restricts which Certificate Authorities (CAs) can issue SSL/TLS certificates.    | `example.com → issue "letsencrypt.org"`              |
+
+what is filesystems used in Linux ?
+
+The file /etc/fstab lists filesystems that should be mounted at boot (or on demand). 
+While ext4 is very common on Linux, you’ll often see other filesystem types there depending on what disks/partitions you use.
+Here are common ones you might encounter in /etc/fstab:
+🔹 Linux filesystems
+ext2, ext3, ext4 → Standard Linux filesystems (ext4 is the default today).
+xfs → High-performance filesystem, common in RHEL/CentOS.
+btrfs → Advanced Linux filesystem with snapshots and checksumming.
+reiserfs → Older journaling filesystem (rare today).
+jfs → IBM’s filesystem, also less common now.
+
+Standard DNS Port is what ?
+
+Port 53 (UDP) → Default for DNS queries (fast, lightweight, used for most lookups).
+Port 53 (TCP) → Used when:
+The response is too large for UDP (e.g., DNSSEC, zone transfers).
+Reliability is required (e.g., zone transfers between DNS servers).
+
+why use TCP now & before used UDP ?
+
+Why DNS originally used UDP
+Speed ⏱️ → UDP is faster, no connection setup. Perfect for small queries like “What’s the IP of google.com?”.
+Low overhead ⚡ → Just send a packet and get an answer.
+Typical response size → Early DNS responses (before DNSSEC, CDNs, etc.) were small (well under 512 bytes). UDP was enough.
+
+Why DNS now often uses TCP
+Bigger responses 📦
+With DNSSEC, CDNs, and IPv6, responses can exceed 512 bytes.
+UDP packets above ~512–1232 bytes may get dropped/fragmented → so TCP is safer.
+Reliability ✅
+UDP can be spoofed (easy for attackers).
+TCP has a handshake, so it’s harder to fake.
+Zone transfers (AXFR/IXFR) 🌍
+When copying large DNS databases between servers, TCP is required.
+Security upgrades 🔒
+Newer standards like DoT (DNS over TLS) and DoH (DNS over HTTPS) only work over TCP (or HTTPS).
+Mitigating DDoS attacks 🛡️
+Attackers abused UDP DNS for amplification attacks (small query → huge response to victim).
+With TCP, that trick is much harder.
+
+what do you do in this issue 
+Bind for 0.0.0.0:8000 
+just do netstat -ntulp | grep 8000 to check the port is already
+
+Kubernets which language is written : GO 
+The best database for Kubernetes depends on specific needs. 
+PostgreSQL and MySQL work well for structured data, while MongoDB and Cassandra handle unstructured data
+
+which command to use to get shell inside a running pod ?
+
+Get a shell inside a running pod 
+If you want to run shell commands inside a container:
+# If the container has /bin/bash
+kubectl exec -it <pod-name> -- /bin/bash
+# If it only has /bin/sh
+kubectl exec -it <pod-name> -- /bin/sh
+# Get cluster info
+kubectl cluster-info
+# List nodes
+kubectl get nodes
+# List pods in a namespace
+kubectl get pods -n default
+# Describe a pod
+kubectl describe pod <pod-name>
+
+
